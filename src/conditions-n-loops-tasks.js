@@ -139,8 +139,41 @@ function convertToRomanNumerals(num) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const NUM_STRS = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  let stringRep = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    const c = numberStr[i];
+    let char;
+    switch (c) {
+      case '-':
+        char = 'minus';
+        break;
+      case '.':
+      case ',':
+        char = 'point';
+        break;
+      default:
+        char = NUM_STRS[+c];
+    }
+    stringRep += char;
+    if (i !== numberStr.length - 1) {
+      stringRep += ' ';
+    }
+  }
+
+  return stringRep;
 }
 
 /**
@@ -155,8 +188,13 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  for (let i = 0; i < str.length / 2; i += 1) {
+    if (str[i] !== str[str.length - 1 - i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
@@ -173,8 +211,13 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -192,8 +235,13 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let newNum = num;
+  while (newNum > 0) {
+    if (newNum % 10 === digit) return true;
+    newNum = Math.floor(newNum / 10);
+  }
+  return false;
 }
 
 /**

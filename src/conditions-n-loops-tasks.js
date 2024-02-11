@@ -363,8 +363,24 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const mtxToEdit = matrix;
+  let l = 0;
+  let r = matrix.length - 1;
+
+  while (l < r) {
+    for (let i = 0; i < r - l; i += 1) {
+      const temp = matrix[l][l + i];
+      mtxToEdit[l][l + i] = mtxToEdit[r - i][l];
+      mtxToEdit[r - i][l] = mtxToEdit[r][r - i];
+      mtxToEdit[r][r - i] = mtxToEdit[l + i][r];
+      mtxToEdit[l + i][r] = temp;
+    }
+    l += 1;
+    r -= 1;
+  }
+
+  return mtxToEdit;
 }
 
 /**
@@ -435,7 +451,7 @@ function sortByAsc(arr) {
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
 function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+  return 0;
 }
 
 /**
@@ -455,8 +471,47 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const arr = new Array(Math.floor(Math.log10(number)) + 1);
+  let temp = number;
+
+  for (let i = arr.length - 1; i >= 0; i -= 1) {
+    arr[i] = temp % 10;
+    temp = Math.floor(temp / 10);
+  }
+
+  let firstSmallerIdx;
+  for (let i = arr.length - 2; i >= 0; i -= 1) {
+    if (arr[i] < arr[i + 1]) {
+      firstSmallerIdx = i;
+      break;
+    }
+  }
+
+  if (!firstSmallerIdx) return number;
+
+  let minIdx = firstSmallerIdx + 1;
+  for (let i = firstSmallerIdx + 1; i < arr.length; i += 1) {
+    if (arr[minIdx] > arr[i]) {
+      minIdx = i;
+    }
+  }
+
+  [arr[firstSmallerIdx], arr[minIdx]] = [arr[minIdx], arr[firstSmallerIdx]];
+  for (let i = firstSmallerIdx + 1; i < arr.length; i += 1) {
+    for (let j = firstSmallerIdx + 1; j < arr.length - 1; j += 1) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+
+  let output = 0;
+  for (let i = 0; i < arr.length; i += 1) {
+    output *= 10;
+    output += arr[i];
+  }
+  return output;
 }
 
 module.exports = {

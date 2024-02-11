@@ -520,14 +520,15 @@ function getNearestBigger(number) {
 
   if (!firstSmallerIdx) return number;
 
-  let minIdx = firstSmallerIdx + 1;
+  let minIdx;
   for (let i = firstSmallerIdx + 1; i < arr.length; i += 1) {
-    if (arr[minIdx] > arr[i]) {
+    if (arr[i] > arr[firstSmallerIdx] && (!minIdx || arr[minIdx] > arr[i])) {
       minIdx = i;
     }
   }
 
-  [arr[firstSmallerIdx], arr[minIdx]] = [arr[minIdx], arr[firstSmallerIdx]];
+  if (minIdx)
+    [arr[firstSmallerIdx], arr[minIdx]] = [arr[minIdx], arr[firstSmallerIdx]];
   for (let i = firstSmallerIdx + 1; i < arr.length; i += 1) {
     for (let j = firstSmallerIdx + 1; j < arr.length - 1; j += 1) {
       if (arr[j] > arr[j + 1]) {
